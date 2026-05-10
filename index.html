@@ -533,50 +533,86 @@
 </div>
 
 <!-- GALLERY -->
-<section class="gallery-section">
-  <p class="section-label reveal">Momentos que viven en el corazón</p>
-  <h2 class="section-title reveal">Nuestro <em>recorrido</em><br>de vida juntos</h2>
+<section class="gallery-section" style="position:relative; overflow:hidden;">
+  <canvas id="heartsCanvas" style="position:absolute; inset:0; width:100%; height:100%; pointer-events:none; z-index:0;"></canvas>
 
-  <div class="gallery-grid reveal">
+  <div style="position:relative; z-index:1;">
+    <p class="section-label reveal">Para ti, Momi</p>
+    <h2 class="section-title reveal">Espero seguir <em>creciendo</em><br>contigo</h2>
 
-    <!-- Fila 1: recién nacido sola, ancha -->
-    <div class="gallery-row">
-      <div class="gallery-card" style="width:100%; height:380px;">
-        <img src="https://raw.githubusercontent.com/SebastianChaur/momi/main/foto%20recien%20nacido.jpeg" alt="Recién nacido" loading="lazy">
+    <div style="display:flex; flex-direction:column; gap:20px; max-width:700px; margin:0 auto;">
+
+      <div class="gallery-card reveal" style="width:100%;">
+        <img src="https://raw.githubusercontent.com/SebastianChaur/momi/main/foto%201.jpeg" alt="Mamá con Sebitas de bebé" loading="lazy" style="width:100%; height:auto; display:block;">
         <div class="caption"><span>El día que me recibiste en tus brazos</span></div>
       </div>
-    </div>
 
-    <!-- Fila 2: bebé parque + pequeño carrito (ambas verticales, lado a lado) -->
-    <div class="gallery-row">
-      <div class="gallery-card" style="width:50%; height:420px;">
-        <img src="https://raw.githubusercontent.com/SebastianChaur/momi/main/foto%20bebe.jpeg" alt="Bebé en el parque" loading="lazy">
-        <div class="caption"><span>Mis primeros pasos contigo</span></div>
-      </div>
-      <div class="gallery-card" style="width:50%; height:420px;">
-        <img src="https://raw.githubusercontent.com/SebastianChaur/momi/main/foto%20peque%C3%B1o.jpeg" alt="Niño con carrito" loading="lazy">
-        <div class="caption"><span>Creciendo a tu lado</span></div>
-      </div>
-    </div>
-
-    <!-- Fila 3: niño pared naranja sola, ancha -->
-    <div class="gallery-row">
-      <div class="gallery-card" style="width:100%; height:380px;">
-        <img src="https://raw.githubusercontent.com/SebastianChaur/momi/main/foto%20ni%C3%B1o.jpeg" alt="Niño más grande con mamá" loading="lazy">
-        <div class="caption"><span>Los años más felices</span></div>
-      </div>
-    </div>
-
-    <!-- Fila 4: foto cine sola, ancha -->
-    <div class="gallery-row">
-      <div class="gallery-card" style="width:100%; height:420px;">
-        <img src="https://raw.githubusercontent.com/SebastianChaur/momi/main/foto_grande.jpg" alt="Hoy juntos" loading="lazy">
+      <div class="gallery-card reveal" style="width:100%;">
+        <img src="https://raw.githubusercontent.com/SebastianChaur/momi/main/foto_grande.jpg" alt="Hoy juntos" loading="lazy" style="width:100%; height:auto; display:block;">
         <div class="caption"><span>Hoy, siempre a tu lado</span></div>
       </div>
-    </div>
 
+    </div>
   </div>
 </section>
+
+<script>
+  const hc = document.getElementById('heartsCanvas');
+  const hctx = hc.getContext('2d');
+  let bgHearts = [];
+
+  function resizeHC() {
+    hc.width = hc.parentElement.offsetWidth;
+    hc.height = hc.parentElement.offsetHeight;
+  }
+  resizeHC();
+  window.addEventListener('resize', resizeHC);
+
+  function spawnBgHeart() {
+    bgHearts.push({
+      x: Math.random() * hc.width,
+      y: hc.height + 20,
+      size: 10 + Math.random() * 18,
+      speed: 0.4 + Math.random() * 0.8,
+      drift: (Math.random() - 0.5) * 0.4,
+      alpha: 0.12 + Math.random() * 0.18,
+      color: ['#c8506a','#e8a0b0','#f5c6d2','#c9973a','#f7edd8'][Math.floor(Math.random()*5)]
+    });
+  }
+
+  function drawBgHeart(ctx, x, y, s) {
+    ctx.beginPath();
+    ctx.moveTo(x, y + s/4);
+    ctx.bezierCurveTo(x, y, x - s/2, y, x - s/2, y + s/4);
+    ctx.bezierCurveTo(x - s/2, y + s/2, x, y + s*0.75, x, y + s);
+    ctx.bezierCurveTo(x, y + s*0.75, x + s/2, y + s/2, x + s/2, y + s/4);
+    ctx.bezierCurveTo(x + s/2, y, x, y, x, y + s/4);
+    ctx.closePath();
+  }
+
+  function animateBgHearts() {
+    hctx.clearRect(0, 0, hc.width, hc.height);
+    bgHearts = bgHearts.filter(h => h.y > -30);
+    bgHearts.forEach(h => {
+      h.y -= h.speed;
+      h.x += h.drift;
+      hctx.save();
+      hctx.globalAlpha = h.alpha;
+      hctx.fillStyle = h.color;
+      drawBgHeart(hctx, h.x - h.size/2, h.y - h.size/2, h.size);
+      hctx.fill();
+      hctx.restore();
+    });
+    requestAnimationFrame(animateBgHearts);
+  }
+
+  setInterval(spawnBgHeart, 600);
+  for(let i = 0; i < 12; i++) {
+    spawnBgHeart();
+    bgHearts[bgHearts.length-1].y = Math.random() * hc.height;
+  }
+  animateBgHearts();
+</script>
 
 <!-- MESSAGES -->
 <section class="messages-section">
