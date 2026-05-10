@@ -215,8 +215,8 @@
 
   .gallery-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: 260px 260px;
+    grid-template-columns: 1fr 1fr;
+    grid-auto-rows: 300px;
     gap: 16px;
   }
 
@@ -230,7 +230,8 @@
 
   .gallery-card:hover { transform: scale(1.02); }
 
-  .gallery-card.tall { grid-row: span 2; }
+  .gallery-card.wide { grid-column: span 2; }
+  .gallery-card.tall { grid-row: span 1; }
 
   .gallery-card img {
     width: 100%;
@@ -533,24 +534,24 @@
   <h2 class="section-title reveal">Nuestro <em>recorrido</em><br>de vida juntos</h2>
 
   <div class="gallery-grid reveal">
-    <div class="gallery-card tall">
+    <div class="gallery-card wide">
       <img src="https://raw.githubusercontent.com/SebastianChaur/momi/main/foto%20recien%20nacido.jpeg" alt="Bebé recién nacido con mamá" loading="lazy">
       <div class="caption"><span>El día que me recibiste en tus brazos</span></div>
     </div>
     <div class="gallery-card">
-      <img src="https://raw.githubusercontent.com/SebastianChaur/momi/main/foto%20bebe.jpeg" alt="Mamá con bebé pequeño" loading="lazy">
+      <img src="https://raw.githubusercontent.com/SebastianChaur/momi/main/foto%20peque%C3%B1o.jpeg" alt="Bebé pequeño con mamá" loading="lazy">
       <div class="caption"><span>Mis primeros pasos contigo</span></div>
     </div>
     <div class="gallery-card">
-      <img src="https://raw.githubusercontent.com/SebastianChaur/momi/main/foto%20peque%C3%B1o.jpeg" alt="Niño pequeño con mamá" loading="lazy">
+      <img src="https://raw.githubusercontent.com/SebastianChaur/momi/main/foto%20bebe.jpeg" alt="Niño en el parque" loading="lazy">
       <div class="caption"><span>Creciendo a tu lado</span></div>
     </div>
-    <div class="gallery-card">
-      <img src="https://raw.githubusercontent.com/SebastianChaur/momi/main/foto%20ni%C3%B1o.jpeg" alt="Familia feliz" loading="lazy">
+    <div class="gallery-card wide">
+      <img src="https://raw.githubusercontent.com/SebastianChaur/momi/main/foto%20ni%C3%B1o.jpeg" alt="Niño más grande con mamá" loading="lazy">
       <div class="caption"><span>Los años más felices</span></div>
     </div>
-    <div class="gallery-card">
-      <img src="https://raw.githubusercontent.com/SebastianChaur/momi/main/foto_grande.jpg" alt="Madre e hijo mayores" loading="lazy">
+    <div class="gallery-card wide">
+      <img src="https://raw.githubusercontent.com/SebastianChaur/momi/main/foto_grande.jpg" alt="Hoy juntos" loading="lazy">
       <div class="caption"><span>Hoy, siempre a tu lado</span></div>
     </div>
   </div>
